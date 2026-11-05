@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Would You Rather? - Kuis Receh Anti Bosan</title>
-  <meta name="description" content="Game kuis Would You Rather 2 pemain paling receh dan absurd. Mending mana hayo?">
+  <title>Would You Rather? - Kuis Receh Multiplayer 2-5 Pemain</title>
+  <meta name="description" content="Game kuis Would You Rather 2-5 pemain paling receh dan absurd. Mending mana hayo? Support hingga 5 pemain!">
   <meta name="theme-color" content="#FFFFFF">
+  <!-- Version Metadata -->
+  <meta name="application-version" content="0.1.2">
+  <meta name="build-date" content="2026-11-05">
   <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,6 +34,7 @@
       <div class="logo-badge">
         <span class="logo-emoji">🤔</span>
         <h1 class="logo-text">Would You Rather?</h1>
+        <span id="version-badge" class="version-badge" title="Versi 0.1.2 - Multiplayer 2-5 Pemain">v0.2.0</span>
       </div>
       <div class="header-actions">
         <button id="sound-toggle" class="icon-btn" title="Aktifkan/Matikan Suara" aria-label="Toggle Suara">
@@ -49,47 +53,36 @@
       <!-- ================= 1. SCREEN START ================= -->
       <section id="start-screen" class="screen active">
         <div class="welcome-card card">
-          <div class="badge-tag">🔥 Edisi Kuis Receh 2 Pemain</div>
+          <div class="badge-tag" id="player-count-badge">🔥 Edisi Kuis Receh 2 Pemain</div>
           <h2 class="welcome-title">Uji Keabsurdan Hidupmu & Temanmu!</h2>
           <p class="welcome-subtitle">
-            Jawab 15 dilema hidup paling konyol. Pemain 1 main dulu, lalu giliran Pemain 2. Di akhir kita bongkar kepribadian kalian!
+            Pilih jumlah pemain, isi nama, jawab 15 dilema konyol. Di akhir kita bongkar kepribadian kalian semua!
           </p>
 
+          <!-- Pemilih Jumlah Pemain -->
+          <div class="player-count-selector" id="player-count-selector" role="radiogroup" aria-label="Pilih jumlah pemain">
+            <button type="button" class="player-count-btn active" data-count="2" aria-pressed="true">
+              <span class="count-number">2</span>
+              <span class="count-label">Pemain</span>
+            </button>
+            <button type="button" class="player-count-btn" data-count="3" aria-pressed="false">
+              <span class="count-number">3</span>
+              <span class="count-label">Pemain</span>
+            </button>
+            <button type="button" class="player-count-btn" data-count="4" aria-pressed="false">
+              <span class="count-number">4</span>
+              <span class="count-label">Pemain</span>
+            </button>
+            <button type="button" class="player-count-btn" data-count="5" aria-pressed="false">
+              <span class="count-number">5</span>
+              <span class="count-label">Pemain</span>
+            </button>
+          </div>
+
           <form id="start-form" class="player-form" onsubmit="return false;">
-            <div class="input-group">
-              <label for="player1-input">
-                <span class="player-icon p1-bg">😎</span> Pemain 1
-              </label>
-              <input 
-                type="text" 
-                id="player1-input" 
-                class="form-input" 
-                placeholder="Nama Pemain 1 (Cth: Budi)" 
-                maxlength="20"
-                value="Pemain 1"
-                required
-              />
-            </div>
-
-            <div class="vs-divider">
-              <span class="vs-line"></span>
-              <span class="vs-badge">⚡ VS ⚡</span>
-              <span class="vs-line"></span>
-            </div>
-
-            <div class="input-group">
-              <label for="player2-input">
-                <span class="player-icon p2-bg">🤪</span> Pemain 2
-              </label>
-              <input 
-                type="text" 
-                id="player2-input" 
-                class="form-input" 
-                placeholder="Nama Pemain 2 (Cth: Siti)" 
-                maxlength="20"
-                value="Pemain 2"
-                required
-              />
+            <!-- Input nama pemain akan di-generate dinamis di sini -->
+            <div id="player-inputs-container" class="player-inputs-container">
+              <!-- Diisi oleh JavaScript -->
             </div>
 
             <button type="button" id="start-game-btn" class="btn btn-primary btn-block btn-bounce">
@@ -98,7 +91,7 @@
           </form>
 
           <div class="rules-hint">
-            <span>💡 <strong>Tips:</strong> Jujur ja kdpp, kdd jawaban bujur salahnya!</span>
+            <span>💡 <strong>Tips:</strong> Jujur ja kdpp, kdd jawaban bujur salahnya! Semua pemain jawab pertanyaan YANG SAMA.</span>
           </div>
         </div>
       </section>
@@ -119,6 +112,12 @@
             <span class="radar-pulse ring-3"></span>
             <div class="intermission-avatar-box">
               <span class="avatar-large">🤫 <span class="arrow-pass">👉</span> 📱</span>
+            </div>
+          </div>
+          <div id="intermission-progress" class="intermission-progress hidden">
+            <span class="progress-label">Pemain selesai: <strong id="completed-count">1</strong> / <strong id="total-players">2</strong></span>
+            <div class="progress-bar-container mini">
+              <div id="intermission-progress-bar" class="progress-bar-fill" style="width: 50%;"></div>
             </div>
           </div>
           <button type="button" id="intermission-continue-btn" class="btn btn-secondary btn-block">
@@ -195,56 +194,20 @@
         <div class="result-header text-center">
           <span class="badge-tag celebration-badge">🎉 KUIS SELESAI 🎉</span>
           <h2 class="result-title">Hasil Kepribadian Absurd</h2>
-          <p class="result-subtitle">Berdasarkan analisa ilmiah nan ngawur dari pilihan kalian berdua:</p>
+          <p class="result-subtitle">Berdasarkan analisa ilmiah nan ngawur dari pilihan semua pemain:</p>
         </div>
 
-        <!-- Hasil Kedua Pemain Berdampingan (Responsive Grid) -->
-        <div class="results-grid">
-          <!-- Kartu Pemain 1 -->
-          <div class="card player-result-card p1-result-card" id="p1-result-box">
-            <div class="player-result-header">
-              <span class="avatar-circle p1-bg">😎</span>
-              <div>
-                <span class="player-role-label">PEMAIN 1</span>
-                <h3 class="player-result-name" id="res-p1-name">Pemain 1</h3>
-              </div>
-            </div>
-            <div class="absurd-title-badge" id="res-p1-badge">Hasil Absurd</div>
-            <p class="absurd-desc" id="res-p1-desc">Deskripsi absurd Pemain 1...</p>
-            <div class="stat-pills">
-              <span class="pill pill-a" id="res-p1-stat-a">Pilihan A: 0</span>
-              <span class="pill pill-b" id="res-p1-stat-b">Pilihan B: 0</span>
-            </div>
-          </div>
-
-          <!-- Kartu Pemain 2 -->
-          <div class="card player-result-card p2-result-card" id="p2-result-box">
-            <div class="player-result-header">
-              <span class="avatar-circle p2-bg">🤪</span>
-              <div>
-                <span class="player-role-label">PEMAIN 2</span>
-                <h3 class="player-result-name" id="res-p2-name">Pemain 2</h3>
-              </div>
-            </div>
-            <div class="absurd-title-badge" id="res-p2-badge">Hasil Absurd</div>
-            <p class="absurd-desc" id="res-p2-desc">Deskripsi absurd Pemain 2...</p>
-            <div class="stat-pills">
-              <span class="pill pill-a" id="res-p2-stat-a">Pilihan A: 0</span>
-              <span class="pill pill-b" id="res-p2-stat-b">Pilihan B: 0</span>
-            </div>
-          </div>
+        <!-- Hasil Semua Pemain dalam Grid Responsif -->
+        <div class="results-grid" id="results-grid">
+          <!-- Diisi dinamis oleh JavaScript -->
         </div>
 
-        <!-- Skor Kecocokan Berdua -->
-        <div class="card compatibility-card text-center">
-          <div class="compatibility-title">Tingkat Kecocokan Frekuensi Otak</div>
-          <div class="compatibility-score-wrapper">
-            <div class="score-glow-ring"></div>
-            <div class="compatibility-score" id="compatibility-score">0%</div>
+        <!-- Matriks Kecocokan (untuk 3+ pemain) -->
+        <div id="compatibility-matrix-section" class="card compatibility-matrix-card hidden">
+          <h3 class="compatibility-title">Matriks Kecocokan Frekuensi Otak</h3>
+          <div id="compatibility-matrix" class="compatibility-matrix">
+            <!-- Diisi dinamis -->
           </div>
-          <p class="compatibility-quote" id="compatibility-quote">
-            "Kalian berdua sama-sama butuh istirahat dari peradaban manusia."
-          </p>
         </div>
 
         <!-- Tombol Aksi Hasil -->
@@ -293,9 +256,13 @@
       </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer dengan Versi -->
     <footer class="app-footer">
-      <p>&copy; 2026 <strong>aldigabut</strong> &bull; Kuis Receh "Would You Rather"</p>
+      <p>&copy; 2026 <strong>aldigabut</strong> &bull; Kuis Receh "Would You Rather" v<span id="footer-version">0.1.2</span></p>
+      <p class="footer-links">
+        <a href="CHANGELOG.md" target="_blank">Changelog</a> &bull; 
+        <a href="README.md" target="_blank">Docs</a>
+      </p>
     </footer>
   </div>
 
