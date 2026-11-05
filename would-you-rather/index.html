@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Would You Rather? - Kuis Receh Anti Bosan</title>
+  <meta name="description" content="Game kuis Would You Rather 2 pemain paling receh dan absurd. Mending mana hayo?">
+  <meta name="theme-color" content="#FFFFFF">
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Canvas Confetti Efek Kemenangan -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Latar Belakang Animasi Bergerak (Tema Terang & Gelap) -->
+  <div class="ambient-background" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-particles" id="ambient-particles"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header Utama & Toggle Tema -->
+    <header class="app-header">
+      <div class="logo-badge">
+        <span class="logo-emoji">🤔</span>
+        <h1 class="logo-text">Would You Rather?</h1>
+      </div>
+      <div class="header-actions">
+        <button id="sound-toggle" class="icon-btn" title="Aktifkan/Matikan Suara" aria-label="Toggle Suara">
+          🔊
+        </button>
+        <button id="history-btn" class="icon-btn" title="Riwayat Kuis" aria-label="Lihat Riwayat">
+          📜
+        </button>
+        <button id="theme-toggle" class="icon-btn" title="Ubah Tema Gelap/Terang" aria-label="Toggle Tema">
+          🌙
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- ================= 1. SCREEN START ================= -->
+      <section id="start-screen" class="screen active">
+        <div class="welcome-card card">
+          <div class="badge-tag">🔥 Edisi Kuis Receh 2 Pemain</div>
+          <h2 class="welcome-title">Uji Keabsurdan Hidupmu & Temanmu!</h2>
+          <p class="welcome-subtitle">
+            Jawab 15 dilema hidup paling konyol. Pemain 1 main dulu, lalu giliran Pemain 2. Di akhir kita bongkar kepribadian kalian!
+          </p>
+
+          <form id="start-form" class="player-form" onsubmit="return false;">
+            <div class="input-group">
+              <label for="player1-input">
+                <span class="player-icon p1-bg">😎</span> Pemain 1
+              </label>
+              <input 
+                type="text" 
+                id="player1-input" 
+                class="form-input" 
+                placeholder="Nama Pemain 1 (Cth: Budi)" 
+                maxlength="20"
+                value="Pemain 1"
+                required
+              />
+            </div>
+
+            <div class="vs-divider">
+              <span class="vs-line"></span>
+              <span class="vs-badge">⚡ VS ⚡</span>
+              <span class="vs-line"></span>
+            </div>
+
+            <div class="input-group">
+              <label for="player2-input">
+                <span class="player-icon p2-bg">🤪</span> Pemain 2
+              </label>
+              <input 
+                type="text" 
+                id="player2-input" 
+                class="form-input" 
+                placeholder="Nama Pemain 2 (Cth: Siti)" 
+                maxlength="20"
+                value="Pemain 2"
+                required
+              />
+            </div>
+
+            <button type="button" id="start-game-btn" class="btn btn-primary btn-block btn-bounce">
+              <span>Mulai Main Sekarang 🚀</span>
+            </button>
+          </form>
+
+          <div class="rules-hint">
+            <span>💡 <strong>Tips:</strong> Jujur ja kdpp, kdd jawaban bujur salahnya!</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2. SCREEN INTERMISSION (GANTIAN GILIRAN) ================= -->
+      <section id="intermission-screen" class="screen">
+        <div class="card intermission-card text-center">
+          <div class="intermission-icon">🔄</div>
+          <span class="badge-tag">Ganti Giliran!</span>
+          <h2 id="intermission-title">Selesai Giliran Pemain 1!</h2>
+          <p id="intermission-desc">
+            Oper HP atau gadget ini ke <strong id="next-player-name" class="highlight-text">Pemain 2</strong>.
+            Jangan intip jawaban tadi ya!
+          </p>
+          <div class="intermission-radar-wrapper">
+            <span class="radar-pulse ring-1"></span>
+            <span class="radar-pulse ring-2"></span>
+            <span class="radar-pulse ring-3"></span>
+            <div class="intermission-avatar-box">
+              <span class="avatar-large">🤫 <span class="arrow-pass">👉</span> 📱</span>
+            </div>
+          </div>
+          <button type="button" id="intermission-continue-btn" class="btn btn-secondary btn-block">
+            <span>Saya Siap, Lanjut Giliran! 🎮</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= 3. SCREEN GAME ================= -->
+      <section id="game-screen" class="screen">
+        <!-- Status Bar Pemain & Progress -->
+        <div class="status-panel">
+          <div class="turn-indicator">
+            <span id="turn-badge" class="turn-badge p1-badge">
+              <span id="current-player-avatar">😎</span>
+              <span id="current-player-name">Pemain 1</span>
+            </span>
+          </div>
+          <div class="progress-info">
+            <span id="question-progress-text">Pertanyaan 1/15</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar Visual -->
+        <div class="progress-bar-container">
+          <div id="progress-bar" class="progress-bar-fill" style="width: 6.66%;">
+            <span class="progress-glow-dot"></span>
+          </div>
+        </div>
+
+        <!-- Kartu Pertanyaan -->
+        <div class="question-container">
+          <div id="question-card" class="card question-card">
+            <div class="category-pill" id="question-category">🍜 Dilema Makanan</div>
+            <h2 class="wyr-lead">Mending kamu...</h2>
+            <div class="question-title-wrapper">
+              <p class="question-text" id="question-prompt">Memilih opsi A atau opsi B?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Pilihan Opsi A & B -->
+        <div class="choices-container">
+          <button type="button" id="choice-a-btn" class="choice-btn choice-a" data-choice="A">
+            <div class="choice-tag">PILIHAN A</div>
+            <div class="choice-content">
+              <span class="choice-emoji" id="choice-a-emoji">🍕</span>
+              <span class="choice-text" id="choice-a-text">Teks Opsi A</span>
+            </div>
+            <div class="choice-ripple"></div>
+            <div class="choice-shimmer"></div>
+          </button>
+
+          <div class="or-separator">
+            <div class="or-line"></div>
+            <span class="or-badge">⚡ ATAU ⚡</span>
+            <div class="or-line"></div>
+          </div>
+
+          <button type="button" id="choice-b-btn" class="choice-btn choice-b" data-choice="B">
+            <div class="choice-tag">PILIHAN B</div>
+            <div class="choice-content">
+              <span class="choice-emoji" id="choice-b-emoji">🍔</span>
+              <span class="choice-text" id="choice-b-text">Teks Opsi B</span>
+            </div>
+            <div class="choice-ripple"></div>
+            <div class="choice-shimmer"></div>
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= 4. SCREEN RESULT ================= -->
+      <section id="result-screen" class="screen">
+        <div class="result-header text-center">
+          <span class="badge-tag celebration-badge">🎉 KUIS SELESAI 🎉</span>
+          <h2 class="result-title">Hasil Kepribadian Absurd</h2>
+          <p class="result-subtitle">Berdasarkan analisa ilmiah nan ngawur dari pilihan kalian berdua:</p>
+        </div>
+
+        <!-- Hasil Kedua Pemain Berdampingan (Responsive Grid) -->
+        <div class="results-grid">
+          <!-- Kartu Pemain 1 -->
+          <div class="card player-result-card p1-result-card" id="p1-result-box">
+            <div class="player-result-header">
+              <span class="avatar-circle p1-bg">😎</span>
+              <div>
+                <span class="player-role-label">PEMAIN 1</span>
+                <h3 class="player-result-name" id="res-p1-name">Pemain 1</h3>
+              </div>
+            </div>
+            <div class="absurd-title-badge" id="res-p1-badge">Hasil Absurd</div>
+            <p class="absurd-desc" id="res-p1-desc">Deskripsi absurd Pemain 1...</p>
+            <div class="stat-pills">
+              <span class="pill pill-a" id="res-p1-stat-a">Pilihan A: 0</span>
+              <span class="pill pill-b" id="res-p1-stat-b">Pilihan B: 0</span>
+            </div>
+          </div>
+
+          <!-- Kartu Pemain 2 -->
+          <div class="card player-result-card p2-result-card" id="p2-result-box">
+            <div class="player-result-header">
+              <span class="avatar-circle p2-bg">🤪</span>
+              <div>
+                <span class="player-role-label">PEMAIN 2</span>
+                <h3 class="player-result-name" id="res-p2-name">Pemain 2</h3>
+              </div>
+            </div>
+            <div class="absurd-title-badge" id="res-p2-badge">Hasil Absurd</div>
+            <p class="absurd-desc" id="res-p2-desc">Deskripsi absurd Pemain 2...</p>
+            <div class="stat-pills">
+              <span class="pill pill-a" id="res-p2-stat-a">Pilihan A: 0</span>
+              <span class="pill pill-b" id="res-p2-stat-b">Pilihan B: 0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skor Kecocokan Berdua -->
+        <div class="card compatibility-card text-center">
+          <div class="compatibility-title">Tingkat Kecocokan Frekuensi Otak</div>
+          <div class="compatibility-score-wrapper">
+            <div class="score-glow-ring"></div>
+            <div class="compatibility-score" id="compatibility-score">0%</div>
+          </div>
+          <p class="compatibility-quote" id="compatibility-quote">
+            "Kalian berdua sama-sama butuh istirahat dari peradaban manusia."
+          </p>
+        </div>
+
+        <!-- Tombol Aksi Hasil -->
+        <div class="result-actions">
+          <button type="button" id="share-wa-btn" class="btn btn-whatsapp btn-block">
+            <span>💬 Bagikan Hasil ke WhatsApp</span>
+          </button>
+          <div class="action-grid-buttons">
+            <button type="button" id="restart-game-btn" class="btn btn-primary">
+              <span>🔄 Main Lagi</span>
+            </button>
+            <button type="button" id="view-answers-btn" class="btn btn-outline">
+              <span>📋 Adu Jawaban</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Rincian Jawaban Per Pertanyaan (Toggle Accordion) -->
+        <div id="breakdown-section" class="card breakdown-card hidden">
+          <h3 class="breakdown-title">Perbandingan Pilihan Tiap Nomor</h3>
+          <div id="breakdown-list" class="breakdown-list">
+            <!-- Diisi lewat JS -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal Riwayat Game (LocalStorage) -->
+    <div id="history-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="modal-box card">
+        <div class="modal-header">
+          <h3>📜 Riwayat Kuis Sebelumnya</h3>
+          <button type="button" id="close-history-btn" class="close-btn" aria-label="Tutup">&times;</button>
+        </div>
+        <div class="modal-body" id="history-content">
+          <!-- Diisi lewat JS -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="clear-history-btn" class="btn btn-outline-danger btn-sm">
+            Hapus Semua Riwayat
+          </button>
+          <button type="button" id="close-modal-footer-btn" class="btn btn-secondary btn-sm">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 <strong>aldigabut</strong> &bull; Kuis Receh "Would You Rather"</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

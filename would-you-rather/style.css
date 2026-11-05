@@ -1,0 +1,1690 @@
+/* =========================================================
+   WOULD YOU RATHER? — Kuis Receh 2 Pemain
+   style.css — Super White & Super Black Theme + Fluid Animations
+   ========================================================= */
+
+/* ======== DESIGN TOKENS (TEMA TERANG: SUPER WHITE) ======== */
+:root {
+  /* Latar Belakang & Surface — SUPER WHITE */
+  --bg: #FFFFFF;
+  --bg-alt: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-alt: #F1F5F9;
+  --surface-glass: rgba(255, 255, 255, 0.88);
+  --surface-glass-border: rgba(99, 102, 241, 0.12);
+
+  /* Teks — Ultra Kontras */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --text-inverse: #FFFFFF;
+
+  /* Border & Input */
+  --border: rgba(226, 232, 240, 0.95);
+  --border-input: #CBD5E1;
+  --border-focus: #6366F1;
+
+  /* Palette Utama: Energetic Jewel & Tech Modern */
+  --primary: #6366F1;
+  --primary-hover: #4F46E5;
+  --primary-glow: rgba(99, 102, 241, 0.35);
+  --secondary: #06B6D4;
+  --secondary-hover: #0891B2;
+  --accent: #EC4899;
+  --accent-hover: #DB2777;
+  --danger: #EF4444;
+  --whatsapp: #22C55E;
+  --whatsapp-hover: #16A34A;
+
+  /* Pilihan A & B */
+  --choice-a: #6366F1;
+  --choice-a-hover: #4F46E5;
+  --choice-a-glow: rgba(99, 102, 241, 0.28);
+  --choice-b: #F97316;
+  --choice-b-hover: #EA580C;
+  --choice-b-glow: rgba(249, 115, 22, 0.28);
+
+  /* Bayangan Halus Bertingkat */
+  --card-shadow: 0 10px 30px -4px rgba(99, 102, 241, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+  --card-shadow-hover: 0 20px 40px -6px rgba(99, 102, 241, 0.16), 0 8px 20px -3px rgba(15, 23, 42, 0.08);
+
+  /* Pemain 1 & 2 */
+  --p1-color: #6366F1;
+  --p1-bg: rgba(99, 102, 241, 0.12);
+  --p2-color: #F97316;
+  --p2-bg: rgba(249, 115, 22, 0.12);
+
+  /* Progress Bar */
+  --progress-bg: #E2E8F0;
+  --progress-fill: linear-gradient(90deg, #6366F1, #8B5CF6, #EC4899);
+
+  /* Ambient Orbs (Pastel Iridescent Aurora di atas Super White) */
+  --orb-1: rgba(167, 139, 250, 0.32);
+  --orb-2: rgba(56, 189, 248, 0.28);
+  --orb-3: rgba(251, 146, 60, 0.24);
+  --orb-4: rgba(244, 114, 182, 0.26);
+
+  /* Ukuran & Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+  --radius-round: 50%;
+
+  /* Font */
+  --font-heading: 'Fredoka', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Transisi */
+  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Spacing */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-2xl: 48px;
+}
+
+/* ======== DESIGN TOKENS (TEMA GELAP: SUPER BLACK) ======== */
+[data-theme="dark"] {
+  /* Latar Belakang & Surface — TRUE PITCH SUPER BLACK (OLED) */
+  --bg: #000000;
+  --bg-alt: #09090D;
+  --surface: rgba(15, 15, 22, 0.85);
+  --surface-alt: rgba(24, 24, 34, 0.90);
+  --surface-glass: rgba(15, 15, 22, 0.75);
+  --surface-glass-border: rgba(255, 255, 255, 0.12);
+
+  /* Teks — Super Bright & Crisp White */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A1A1AA;
+  --text-muted: #71717A;
+  --text-inverse: #000000;
+
+  /* Border & Input */
+  --border: rgba(255, 255, 255, 0.12);
+  --border-input: rgba(255, 255, 255, 0.18);
+  --border-focus: #8B5CF6;
+
+  /* Palette Utama: Cyber Neon */
+  --primary: #8B5CF6;
+  --primary-hover: #A78BFA;
+  --primary-glow: rgba(139, 92, 246, 0.55);
+  --secondary: #00F0FF;
+  --secondary-hover: #38BDF8;
+  --accent: #F43F5E;
+  --accent-hover: #FB7185;
+  --danger: #FF4757;
+  --whatsapp: #2ED573;
+  --whatsapp-hover: #1DD1A1;
+
+  /* Pilihan A & B */
+  --choice-a: #8B5CF6;
+  --choice-a-hover: #A78BFA;
+  --choice-a-glow: rgba(139, 92, 246, 0.45);
+  --choice-b: #FF6B4A;
+  --choice-b-hover: #FF856B;
+  --choice-b-glow: rgba(255, 107, 74, 0.45);
+
+  /* Bayangan Neon & Pitch Black */
+  --card-shadow: 0 10px 36px 0 rgba(0, 0, 0, 0.95), 0 0 20px rgba(139, 92, 246, 0.12);
+  --card-shadow-hover: 0 18px 48px 0 rgba(0, 0, 0, 1), 0 0 32px rgba(139, 92, 246, 0.28);
+
+  /* Pemain 1 & 2 */
+  --p1-color: #A78BFA;
+  --p1-bg: rgba(139, 92, 246, 0.22);
+  --p2-color: #FF856B;
+  --p2-bg: rgba(255, 107, 74, 0.22);
+
+  /* Progress Bar */
+  --progress-bg: #1F1F2E;
+  --progress-fill: linear-gradient(90deg, #8B5CF6, #00F0FF, #F43F5E);
+
+  /* Ambient Orbs (Cosmic Neon Glow di atas Super Black) */
+  --orb-1: rgba(139, 92, 246, 0.42);
+  --orb-2: rgba(0, 240, 255, 0.35);
+  --orb-3: rgba(244, 63, 94, 0.32);
+  --orb-4: rgba(59, 130, 246, 0.30);
+}
+
+/* ======== RESET & BASE ======== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color var(--transition-smooth), color var(--transition-smooth);
+}
+
+img, svg { max-width: 100%; display: block; }
+a { color: var(--primary); text-decoration: none; }
+button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+
+/* ======== CONFETTI CANVAS ======== */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* =========================================================
+   ANIMASI LATAR BELAKANG BERGERAK (AMBIENT MOTION)
+   ========================================================= */
+.ambient-background {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Orbs yang mengambang & berubah bentuk secara dinamis */
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(85px);
+  opacity: 0.85;
+  will-change: transform;
+}
+
+.orb-1 {
+  width: 520px;
+  height: 520px;
+  top: -12%;
+  left: -10%;
+  background: radial-gradient(circle, var(--orb-1) 0%, transparent 70%);
+  animation: floatOrb1 20s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+  width: 460px;
+  height: 460px;
+  top: 35%;
+  right: -12%;
+  background: radial-gradient(circle, var(--orb-2) 0%, transparent 70%);
+  animation: floatOrb2 24s ease-in-out infinite alternate;
+}
+
+.orb-3 {
+  width: 480px;
+  height: 480px;
+  bottom: -15%;
+  left: 15%;
+  background: radial-gradient(circle, var(--orb-3) 0%, transparent 70%);
+  animation: floatOrb3 22s ease-in-out infinite alternate;
+}
+
+.orb-4 {
+  width: 380px;
+  height: 380px;
+  top: 20%;
+  left: 40%;
+  background: radial-gradient(circle, var(--orb-4) 0%, transparent 70%);
+  animation: floatOrb4 28s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb1 {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50%  { transform: translate(90px, 70px) scale(1.15) rotate(90deg); }
+  100% { transform: translate(-40px, 120px) scale(0.9) rotate(180deg); }
+}
+
+@keyframes floatOrb2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-100px, -60px) scale(1.2); }
+  100% { transform: translate(50px, -110px) scale(0.85); }
+}
+
+@keyframes floatOrb3 {
+  0%   { transform: translate(0, 0) scale(0.95); }
+  50%  { transform: translate(110px, -80px) scale(1.25); }
+  100% { transform: translate(-70px, 50px) scale(1); }
+}
+
+@keyframes floatOrb4 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-80px, 90px) scale(1.3); }
+  100% { transform: translate(90px, -70px) scale(0.9); }
+}
+
+/* Partikel Bergerak Mengapung (Sparks & Floating Symbols) */
+.ambient-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.floating-particle {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  font-weight: 700;
+  animation: particleFloatUp var(--drift-duration, 14s) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Warna partikel tema Super White vs Super Black */
+:root .floating-particle {
+  color: rgba(99, 102, 241, 0.35);
+  text-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+[data-theme="dark"] .floating-particle {
+  color: rgba(0, 240, 255, 0.45);
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.6), 0 0 24px rgba(139, 92, 246, 0.4);
+}
+
+@keyframes particleFloatUp {
+  0% {
+    transform: translateY(105vh) translateX(0) rotate(0deg) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: var(--particle-max-opacity, 0.65);
+  }
+  50% {
+    transform: translateY(50vh) translateX(var(--sway-x, 30px)) rotate(180deg) scale(1);
+    opacity: var(--particle-max-opacity, 0.65);
+  }
+  85% {
+    opacity: var(--particle-max-opacity, 0.65);
+  }
+  100% {
+    transform: translateY(-10vh) translateX(calc(var(--sway-x, 30px) * -1)) rotate(360deg) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* ======== APP CONTAINER ======== */
+.app-container {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--sp-md);
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ======== HEADER ======== */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-sm) 0;
+  margin-bottom: var(--sp-md);
+}
+
+.logo-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.logo-badge:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.logo-emoji {
+  font-size: 1.6rem;
+  display: inline-block;
+  animation: logoWiggle 4s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes logoWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  15%      { transform: rotate(-12deg) scale(1.1); }
+  30%      { transform: rotate(10deg); }
+  45%      { transform: rotate(-5deg); }
+  60%      { transform: rotate(0deg); }
+}
+
+.logo-text {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.3px;
+}
+
+.header-actions {
+  display: flex;
+  gap: var(--sp-sm);
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-round);
+  border: 1px solid var(--border);
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  font-size: 1.15rem;
+  display: grid;
+  place-items: center;
+  transition: all var(--transition-fast);
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-btn:hover {
+  border-color: var(--primary);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 6px 20px var(--primary-glow);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+/* ======== MAIN CONTENT & SCREENS ======== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  display: none;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+  flex-direction: column;
+  gap: var(--sp-lg);
+}
+
+.screen.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.screen.slide-in {
+  animation: screenSlideEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes screenSlideEntrance {
+  0%   { opacity: 0; transform: translateY(28px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ======== GLASSMORPHISM CARD DESIGN ======== */
+.card {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-lg);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-smooth);
+}
+
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* ======== TEXT HELPERS ======== */
+.text-center { text-align: center; }
+.hidden { display: none !important; }
+.highlight-text {
+  color: var(--primary);
+  font-weight: 700;
+  text-shadow: 0 0 12px var(--primary-glow);
+}
+
+/* ======== BADGES & PILLS ======== */
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-alt);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================================
+   1. SCREEN START — Form Pemain & Visual VS
+   ========================================================= */
+.welcome-card {
+  text-align: center;
+  padding: var(--sp-xl) var(--sp-lg);
+  animation: gentleCardPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes gentleCardPulse {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+.welcome-title {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: var(--sp-md) 0 var(--sp-sm);
+  line-height: 1.25;
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.welcome-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: var(--sp-xl);
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.player-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.input-group label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.player-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-round);
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  transition: transform var(--transition-fast);
+}
+
+.input-group:focus-within .player-icon {
+  transform: scale(1.15) rotate(8deg);
+}
+
+.p1-bg { background: var(--p1-bg); color: var(--p1-color); }
+.p2-bg { background: var(--p2-bg); color: var(--p2-color); }
+
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-input);
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px var(--primary-glow);
+  transform: translateY(-1px);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Divider VS dengan Animasi Pulsing */
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: var(--sp-xs) 0;
+}
+
+.vs-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.vs-badge {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--accent);
+  background: var(--surface-alt);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  letter-spacing: 2px;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.25);
+  animation: vsBadgePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes vsBadgePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.25);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 24px rgba(236, 72, 153, 0.55);
+  }
+}
+
+.rules-hint {
+  margin-top: var(--sp-lg);
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   2. SCREEN INTERMISSION — Radar Gelombang & Oper Gadget
+   ========================================================= */
+.intermission-card {
+  text-align: center;
+  padding: var(--sp-2xl) var(--sp-lg);
+}
+
+.intermission-icon {
+  font-size: 3.2rem;
+  display: inline-block;
+  animation: spinSlow 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  margin-bottom: var(--sp-sm);
+}
+
+@keyframes spinSlow {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.intermission-card h2 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  margin: var(--sp-sm) 0;
+}
+
+.intermission-card p {
+  color: var(--text-secondary);
+  font-size: 0.96rem;
+  max-width: 400px;
+  margin: 0 auto var(--sp-lg);
+}
+
+/* Radar Sonar Wave Pulse Effect */
+.intermission-radar-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: var(--sp-md) auto var(--sp-xl);
+  display: grid;
+  place-items: center;
+}
+
+.radar-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  animation: radarWave 2.8s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radar-pulse.ring-1 { animation-delay: 0s; }
+.radar-pulse.ring-2 { animation-delay: 0.9s; }
+.radar-pulse.ring-3 { animation-delay: 1.8s; }
+
+@keyframes radarWave {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.intermission-avatar-box {
+  position: relative;
+  z-index: 2;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  box-shadow: 0 0 24px var(--primary-glow);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 2.2rem;
+}
+
+.arrow-pass {
+  display: inline-block;
+  animation: arrowSlidePass 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes arrowSlidePass {
+  0%   { transform: translateX(-4px); }
+  100% { transform: translateX(6px); }
+}
+
+/* =========================================================
+   3. SCREEN GAME — Pertanyaan & Tombol Pilihan Interaktif
+   ========================================================= */
+
+/* Status Panel */
+.status-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-xs);
+}
+
+.turn-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  transition: all var(--transition-fast);
+}
+
+.p1-badge {
+  background: var(--p1-bg);
+  color: var(--p1-color);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.p2-badge {
+  background: var(--p2-bg);
+  color: var(--p2-color);
+  border-color: rgba(249, 115, 22, 0.3);
+}
+
+.progress-info {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+/* Progress Bar Visual Bergerak */
+.progress-bar-container {
+  width: 100%;
+  height: 10px;
+  background: var(--progress-bg);
+  border-radius: var(--radius-pill);
+  overflow: visible;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--progress-fill);
+  background-size: 200% 100%;
+  animation: progressStream 3s linear infinite;
+  border-radius: var(--radius-pill);
+  transition: width var(--transition-normal);
+  position: relative;
+  min-width: 12px;
+}
+
+@keyframes progressStream {
+  0%   { background-position: 100% 0%; }
+  100% { background-position: -100% 0%; }
+}
+
+/* Dot Beacon di Ujung Progress Bar */
+.progress-glow-dot {
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 3px solid var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
+  animation: dotBeaconPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dotBeaconPulse {
+  0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 8px var(--primary-glow); }
+  50%      { transform: translateY(-50%) scale(1.3); box-shadow: 0 0 18px var(--primary); }
+}
+
+/* Kartu Pertanyaan dengan Efek 3D Flip & Floating Breath */
+.question-container {
+  perspective: 1200px;
+}
+
+.question-card {
+  padding: var(--sp-xl) var(--sp-lg);
+  text-align: center;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  animation: cardFloatingBreath 6s ease-in-out infinite;
+}
+
+@keyframes cardFloatingBreath {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+.question-card.card-flip-enter {
+  animation: cardFlipIn3D 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardFlipIn3D {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-16deg) translateY(24px) scale(0.92);
+  }
+  60% {
+    transform: perspective(1000px) rotateX(4deg) translateY(-4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+  }
+}
+
+/* Category Pill dengan Shimmer Text */
+.category-pill {
+  display: inline-block;
+  background: var(--surface-alt);
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  margin-bottom: var(--sp-md);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.wyr-lead {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-xs);
+  letter-spacing: 0.3px;
+}
+
+.question-text {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+/* ======== TOMBOL PILIHAN DENGAN INTERAKSI HIDUP ======== */
+.choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+.choice-btn {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  background: var(--surface-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  text-align: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  box-shadow: var(--card-shadow);
+  outline: none;
+  cursor: pointer;
+  will-change: transform;
+}
+
+/* Hover 3D Lift */
+.choice-btn:hover {
+  transform: translateY(-5px) scale(1.02);
+}
+
+.choice-btn:active {
+  transform: scale(0.97);
+}
+
+/* Gaya Opsi A */
+.choice-a {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.choice-a:hover {
+  border-color: var(--choice-a);
+  box-shadow: 0 12px 32px var(--choice-a-glow);
+}
+
+/* Gaya Opsi B */
+.choice-b {
+  border-color: rgba(249, 115, 22, 0.4);
+}
+
+.choice-b:hover {
+  border-color: var(--choice-b);
+  box-shadow: 0 12px 32px var(--choice-b-glow);
+}
+
+.choice-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.choice-a .choice-tag { color: var(--choice-a); }
+.choice-b .choice-tag { color: var(--choice-b); }
+
+.choice-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.choice-emoji {
+  font-size: 2.2rem;
+  display: inline-block;
+  animation: emojiIdleFloat 3.5s ease-in-out infinite;
+  transform-origin: center center;
+  transition: transform var(--transition-fast);
+}
+
+.choice-btn:hover .choice-emoji {
+  animation: emojiWiggleJoy 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes emojiIdleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+@keyframes emojiWiggleJoy {
+  0%   { transform: rotate(-8deg) scale(1.15); }
+  100% { transform: rotate(8deg) scale(1.15); }
+}
+
+.choice-text {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+/* Shimmer Light Beam Effect */
+.choice-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  z-index: 1;
+}
+
+.choice-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -120%;
+  width: 80%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  transform: rotate(30deg);
+  transition: none;
+}
+
+.choice-btn:hover .choice-shimmer::after {
+  animation: shimmerSweep 1.2s ease-in-out infinite;
+}
+
+@keyframes shimmerSweep {
+  0%   { left: -120%; }
+  100% { left: 160%; }
+}
+
+/* Ripple Klik */
+.choice-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.choice-btn.clicked .choice-ripple {
+  animation: ripplePop 0.45s ease-out forwards;
+}
+
+@keyframes ripplePop {
+  0%   { width: 0; height: 0; opacity: 0.6; }
+  100% { width: 500px; height: 500px; opacity: 0; }
+}
+
+/* Animasi Selected & Dimmed */
+.choice-btn.selected-a {
+  background: var(--choice-a) !important;
+  border-color: var(--choice-a) !important;
+  color: #FFFFFF !important;
+  animation: choiceSelectedBurst 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  box-shadow: 0 10px 30px var(--choice-a-glow) !important;
+}
+
+.choice-btn.selected-b {
+  background: var(--choice-b) !important;
+  border-color: var(--choice-b) !important;
+  color: #FFFFFF !important;
+  animation: choiceSelectedBurst 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  box-shadow: 0 10px 30px var(--choice-b-glow) !important;
+}
+
+.choice-btn.selected-a .choice-tag,
+.choice-btn.selected-a .choice-text,
+.choice-btn.selected-b .choice-tag,
+.choice-btn.selected-b .choice-text {
+  color: #FFFFFF !important;
+}
+
+@keyframes choiceSelectedBurst {
+  0%   { transform: scale(0.97); }
+  50%  { transform: scale(1.05); }
+  100% { transform: scale(1.02); }
+}
+
+.choice-btn.dimmed {
+  opacity: 0.25;
+  transform: scale(0.95);
+  pointer-events: none;
+  filter: blur(1px);
+}
+
+/* OR Separator Visual */
+.or-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.or-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.or-badge {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: var(--surface-alt);
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   4. SCREEN RESULT — Hasil Kepribadian & Skor Bergerak
+   ========================================================= */
+.result-header {
+  margin-bottom: var(--sp-sm);
+}
+
+.celebration-badge {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 4px 16px var(--primary-glow);
+  animation: badgeFloating 3s ease-in-out infinite;
+}
+
+@keyframes badgeFloating {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+.result-title {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  margin-top: var(--sp-md);
+  font-weight: 700;
+}
+
+.result-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Grid Kartu Hasil Pemain */
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-md);
+}
+
+@media (max-width: 560px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.player-result-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.p1-result-card { border-top: 5px solid var(--p1-color); }
+.p2-result-card { border-top: 5px solid var(--p2-color); }
+
+.player-result-card.card-reveal {
+  animation: cardRevealPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardRevealPop {
+  0%   { opacity: 0; transform: translateY(32px) scale(0.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.player-result-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  justify-content: center;
+}
+
+.avatar-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-round);
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  border: 2px solid var(--border);
+}
+
+.player-role-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.player-result-name {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.absurd-title-badge {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #FFFFFF;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  line-height: 1.35;
+  box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+.absurd-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.stat-pills {
+  display: flex;
+  gap: var(--sp-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+}
+
+.pill-a { background: var(--p1-bg); color: var(--p1-color); }
+.pill-b { background: var(--p2-bg); color: var(--p2-color); }
+
+/* Kartu Skor Kecocokan dengan Ring Berputar */
+.compatibility-card {
+  margin-top: var(--sp-sm);
+  background: var(--surface-glass);
+}
+
+.compatibility-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-md);
+}
+
+.compatibility-score-wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto var(--sp-md);
+  display: grid;
+  place-items: center;
+}
+
+/* Neon Conic Gradient Ring Berputar 360 Derajat */
+.score-glow-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--primary),
+    var(--secondary),
+    var(--accent),
+    var(--primary)
+  );
+  animation: spinScoreRing 6s linear infinite;
+  mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+}
+
+@keyframes spinScoreRing {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.compatibility-score {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.compatibility-quote {
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  max-width: 420px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Tombol Aksi */
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.action-grid-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-sm);
+}
+
+/* Breakdown Jawaban (Accordion) */
+.breakdown-card {
+  margin-top: var(--sp-sm);
+}
+
+.breakdown-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  margin-bottom: var(--sp-md);
+}
+
+.breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+.breakdown-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: var(--sp-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.breakdown-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.breakdown-q-number {
+  font-weight: 800;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.breakdown-q-text {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.breakdown-answers {
+  display: flex;
+  gap: var(--sp-sm);
+  flex-wrap: wrap;
+}
+
+.breakdown-ans {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.ans-match {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--secondary);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.ans-diff-p1 {
+  background: var(--p1-bg);
+  color: var(--p1-color);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.ans-diff-p2 {
+  background: var(--p2-bg);
+  color: var(--p2-color);
+  border: 1px solid rgba(249, 115, 22, 0.25);
+}
+
+/* =========================================================
+   5. BUTTONS DENGAN EFEK MOTION
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  font-size: 0.98rem;
+  font-weight: 700;
+  transition: all var(--transition-fast);
+  outline: none;
+  user-select: none;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-block { width: 100%; }
+.btn-sm { padding: 9px 18px; font-size: 0.85rem; }
+
+.btn-primary {
+  background: var(--primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+.btn-primary:hover, .btn-primary:focus-visible {
+  background: var(--primary-hover);
+  box-shadow: 0 8px 24px var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: #FFFFFF;
+}
+
+.btn-secondary:hover, .btn-secondary:focus-visible {
+  background: var(--secondary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+  background: var(--whatsapp);
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+  animation: waPulseButton 2.5s ease-in-out infinite;
+}
+
+.btn-whatsapp:hover, .btn-whatsapp:focus-visible {
+  background: var(--whatsapp-hover);
+  transform: translateY(-2px);
+}
+
+@keyframes waPulseButton {
+  0%, 100% { box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3); }
+  50%      { box-shadow: 0 6px 26px rgba(34, 197, 94, 0.6); }
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+.btn-outline:hover, .btn-outline:focus-visible {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--surface-alt);
+  transform: translateY(-2px);
+}
+
+.btn-outline-danger {
+  background: transparent;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+  background: var(--danger);
+  color: #FFFFFF;
+}
+
+/* Tombol CTA Memantul Dinamis */
+.btn-bounce {
+  animation: gentleCtaBounce 2.2s ease-in-out infinite;
+}
+
+.btn-bounce:hover {
+  animation: none;
+}
+
+@keyframes gentleCtaBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* =========================================================
+   6. MODAL RIWAYAT
+   ========================================================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-md);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: fadeInModal 0.25s ease forwards;
+}
+
+.modal-backdrop.hidden {
+  display: none;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 480px;
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlidePop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalSlidePop {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-md);
+}
+
+.modal-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+}
+
+.close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-round);
+  background: var(--surface-alt);
+  color: var(--text-secondary);
+  font-size: 1.4rem;
+  display: grid;
+  place-items: center;
+  transition: all var(--transition-fast);
+}
+
+.close-btn:hover {
+  background: var(--danger);
+  color: #FFFFFF;
+}
+
+.modal-body {
+  overflow-y: auto;
+  flex: 1;
+  padding-right: var(--sp-sm);
+}
+
+.modal-footer {
+  display: flex;
+  gap: var(--sp-sm);
+  justify-content: flex-end;
+  margin-top: var(--sp-md);
+  padding-top: var(--sp-md);
+  border-top: 1px solid var(--border);
+}
+
+.history-item {
+  padding: var(--sp-md);
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin-bottom: var(--sp-sm);
+  transition: transform var(--transition-fast);
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+}
+
+.history-item:last-child { margin-bottom: 0; }
+
+.history-date {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.history-names {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 4px 0;
+  color: var(--text-primary);
+}
+
+.history-results {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.history-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--sp-xl) 0;
+  font-size: 0.92rem;
+}
+
+/* ======== FOOTER ======== */
+.app-footer {
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  padding: var(--sp-lg) 0 var(--sp-md);
+}
+
+/* ======== RESPONSIVE BREAKPOINTS ======== */
+@media (max-width: 420px) {
+  .welcome-title { font-size: 1.4rem; }
+  .question-text { font-size: 1.1rem; }
+  .choice-btn { padding: 18px 14px; }
+  .choice-emoji { font-size: 1.8rem; }
+  .choice-text { font-size: 0.98rem; }
+  .compatibility-score { font-size: 2.8rem; }
+  .action-grid-buttons { grid-template-columns: 1fr; }
+  .absurd-title-badge { font-size: 0.95rem; }
+}
+
+@media (min-width: 561px) {
+  .question-text { font-size: 1.35rem; }
+  .choice-btn { padding: 26px 22px; }
+}
+
+/* ======== PRINT STYLES ======== */
+@media print {
+  .ambient-background, #confetti-canvas, .app-header, .app-footer,
+  .result-actions, .btn, .icon-btn, .modal-backdrop {
+    display: none !important;
+  }
+}
